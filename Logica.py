@@ -10,9 +10,9 @@ def cicloSnake(maze, cabeza):
     
     objetivo = maze._goal
 
-    if not maze.respaldoObjetivo:        
+    if not maze.respaldoObjetivo:
         maze._canvas.delete(maze._objetivo._head)
-        objetivo = crearObjetivo(maze,False)
+        objetivo = crearObjetivo(maze)
     else:
         maze._objetivo = maze.respaldoObjetivo
         maze._goal = maze.respaldoGoal
@@ -47,11 +47,11 @@ def encerrado(maze):
         textLabel(maze,'¡AY CARAMBA! ¡NO HAY CAMINO! - FIN DEL JUEGO - PUNTAJE TOTAL', maze.snakeSize)
         
 def crearObjetivo(maze, random=True):
-    #defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25)]
-    defaultPath = [(22,25)]
+    defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,22),(10,10)]
     print("GETsnakeSize", maze.getSnakeSize())
     print("snake body calculated", len(maze.snakeBody))
     print("Celdassnake", maze.snakeCeldas)    
+    print("Bodysnake", maze.snakeBody)
     if random:
         notValid = True
         while notValid:

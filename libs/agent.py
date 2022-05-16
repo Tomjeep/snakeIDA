@@ -31,6 +31,7 @@ class agent:
         _body-->    You don't need to pass this
                     Tracks the body of the agent (the previous positions of it)
         '''
+        self.cabezaInicializada = False
         self._parentMaze=parentMaze
         self.color=color
         if(isinstance(color,str)):
@@ -102,13 +103,15 @@ class agent:
                         pass
                 
                 #TT
-                #if not self._parentMaze.respaldoObjetivo:
-                print(self._parentMaze.getSnakeSize())
                 largo = len(self._body)
-                if (largo > self._parentMaze.snakeSize):
-                    self._parentMaze._canvas.delete(self._body[0])
-                    self._body.pop(0)
-                self._body.append(self._head)
+                if self.cabezaInicializada:
+                    self._body.append(self._head)
+                    if (largo > self._parentMaze.snakeSize):
+                        self._parentMaze._canvas.delete(self._body[0])
+                        self._body.pop(0)                    
+                else:
+                    self._parentMaze._canvas.delete(self._head)
+                    self.cabezaInicializada = True                    
                 #TT
                 
             if not self.filled or self.shape=='arrow':
