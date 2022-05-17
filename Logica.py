@@ -46,13 +46,13 @@ def encerrado(maze):
     else: 
         textLabel(maze,'¡AY CARAMBA! ¡NO HAY CAMINO! - FIN DEL JUEGO - PUNTAJE TOTAL', maze.snakeSize)
         
-def crearObjetivo(maze, random=True):
+def crearObjetivo(maze):
     defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,22),(10,10)]
     print("GETsnakeSize", maze.getSnakeSize())
     print("snake body calculated", len(maze.snakeBody))
     print("Celdassnake", maze.snakeCeldas)    
     print("Bodysnake", maze.snakeBody)
-    if random:
+    if maze.caminoAleatorio:
         notValid = True
         while notValid:
             x = randrange(1,25,1)
