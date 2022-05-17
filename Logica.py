@@ -8,20 +8,18 @@ def cicloSnake(maze, cabeza):
     tempx = maze.snakeCeldas[0][0]#maze._objetivo.x
     tempy = maze.snakeCeldas[0][1]#maze._objetivo.y
     
-    objetivo = maze._goal
-
     if not maze.respaldoObjetivo:
         maze._canvas.delete(maze._objetivo._head)
         objetivo = crearObjetivo(maze)
     else:
         maze._objetivo = maze.respaldoObjetivo
         maze._goal = maze.respaldoGoal
+        objetivo = maze._goal
         maze.respaldoObjetivo = ()
-        maze.respaldoGoal = ()
-    
+        maze.respaldoGoal = ()   
     
 
-    camino = aEstrella(maze, objetivo, (tempx,tempy))    
+    camino = aEstrella(maze, objetivo, (tempx,tempy), True)    
     
     if camino == None:
         encerrado(maze)      
@@ -38,19 +36,21 @@ def encerrado(maze):
     print(f"snakeSize = {maze.snakeSize}")
     print("snake body calculated", len(maze.snakeBody))
     print("snake celdas", len(maze.snakeCeldas))    
+    print("Celdassnake", maze.snakeCeldas)
     if maze.liberacion:
         maze.respaldoObjetivo = maze._objetivo
         maze.respaldoGoal = maze._goal
-        maze.snakeDelay = 3000        
+        maze.snakeDelay = 500       
         algoritmoLiberacion(maze, maze.snakeCeldas[0][0], maze.snakeCeldas[0][1]) 
     else: 
         textLabel(maze,'¡AY CARAMBA! ¡NO HAY CAMINO! - FIN DEL JUEGO - PUNTAJE TOTAL', maze.snakeSize)
         
 def crearObjetivo(maze):
     defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,22),(10,10)]
+    #defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,24),(10,10)]
     print("GETsnakeSize", maze.getSnakeSize())
     print("snake body calculated", len(maze.snakeBody))
-    print("Celdassnake", maze.snakeCeldas)    
+    print("Celdassnake", maze.snakeCeldas)
     print("Bodysnake", maze.snakeBody)
     if maze.caminoAleatorio:
         notValid = True
@@ -78,11 +78,9 @@ def algoritmoLiberacion(maze, x, y):
     
     c=agent(maze,x,y,color='red',footprints=True)
 
-    
-    camino = aEstrella(maze, objetivo, (x,y))
-    print(f"snakeSize = {maze.snakeSize}")
-    print("snake body calculated", len(maze.snakeBody))
-    print("snake celdas", len(maze.snakeCeldas)) 
+    print("snakeSize antes ALG", maze.getSnakeSize())
+    camino = aEstrella(maze, objetivo, (x,y), False)
+    print("snakeSize despues ALG", maze.getSnakeSize())
                             
     maze.tracePath({c:camino},delay=maze.snakeDelay,kill=True)
 

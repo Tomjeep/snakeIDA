@@ -7,7 +7,7 @@ def heuristica(celdaA, celdaB):
     x2, y2 = celdaB
     return (abs(x1 - x2) + abs(y1 - y2))
 
-def aEstrella(mapa,objetivo,inicio):
+def aEstrella(mapa,objetivo,inicio, crece):
     print("objetivo", objetivo)
     print("inicio", inicio)
     cola = PriorityQueue()
@@ -47,7 +47,7 @@ def aEstrella(mapa,objetivo,inicio):
     if objetivo in camino:
 
         caminoInvertido={}
-        snakeLargo = mapa.getSnakeSize()
+        snakeLargo = mapa.getSnakeSize() if crece else mapa.getSnakeSize() - 1
         if (snakeLargo == 0): 
             snakeLargo += 1
         celda=objetivo

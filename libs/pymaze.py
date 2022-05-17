@@ -658,7 +658,7 @@ class maze:
     def configurarSnake(self):        
         objetivo = crearObjetivo(self)
         c=agent(self,25,25,color='red',footprints=True)
-        camino = aEstrella(self, objetivo, (25,25))
+        camino = aEstrella(self, objetivo, (25,25), True)
         self.tracePath({c:camino},delay=self.snakeDelay,kill=True)
     #TT
     def run(self):
