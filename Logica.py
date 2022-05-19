@@ -4,7 +4,6 @@ from AEstrella import *
 from random import randrange
 
 def cicloSnake(maze, cabeza):
-    print ("NUEVO CICLO*********************")
     tempx = maze.snakeCeldas[0][0]#maze._objetivo.x
     tempy = maze.snakeCeldas[0][1]#maze._objetivo.y
     
@@ -18,9 +17,7 @@ def cicloSnake(maze, cabeza):
         maze.respaldoObjetivo = ()
         maze.respaldoGoal = ()   
     
-
     camino = aEstrella(maze, objetivo, (tempx,tempy), True)    
-    
     if camino == None:
         encerrado(maze)      
         return 
@@ -31,12 +28,7 @@ def cicloSnake(maze, cabeza):
                         
     maze.tracePath({c:camino},delay=maze.snakeDelay,kill=True)
 
-def encerrado(maze):    
-    print("SE ENCERRO /******************************************")
-    print(f"snakeSize = {maze.snakeSize}")
-    print("snake body calculated", len(maze.snakeBody))
-    print("snake celdas", len(maze.snakeCeldas))    
-    print("Celdassnake", maze.snakeCeldas)
+def encerrado(maze):
     if maze.liberacion:
         maze.respaldoObjetivo = maze._objetivo
         maze.respaldoGoal = maze._goal
@@ -47,11 +39,6 @@ def encerrado(maze):
         
 def crearObjetivo(maze):
     defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,22),(10,10)]
-    #defaultPath = [(22,25),(),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,25),(22,25),(22,20),(25,20),(25,24),(10,10)]
-    print("GETsnakeSize", maze.getSnakeSize())
-    print("snake body calculated", len(maze.snakeBody))
-    print("Celdassnake", maze.snakeCeldas)
-    print("Bodysnake", maze.snakeBody)
     if maze.caminoAleatorio:
         notValid = True
         while notValid:
@@ -61,18 +48,13 @@ def crearObjetivo(maze):
     else :
         x = defaultPath[maze.getSnakeSize()][0]
         y = defaultPath[maze.getSnakeSize()][1]
-
-    #print("*****************************************************")
-    #print(f"Objetivo nuevo: {x},{y}")
+    
     maze._objetivo= agent(maze,x,y,color=COLOR.green)    
     maze._goal = (x,y)    
     return (x, y)
 
 
-def algoritmoLiberacion(maze, x, y):
-    #self._canvas.delete(self._objetivo._head)
-    #self._objetivo = [] 
-    
+def algoritmoLiberacion(maze, x, y):    
     objetivo = objetivoLiberacion(maze, x, y)
     maze._goal = objetivo
     
@@ -102,6 +84,3 @@ def objetivoLiberacion(maze, x, y):
     if celdaVecina not in maze.snakeCeldas:
         return celdaVecina
     return
-
-    #actualizar snakeCeldas
-    #esta comiendose 2 colitas
