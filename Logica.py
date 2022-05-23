@@ -3,7 +3,7 @@ from libs.color import COLOR
 from AEstrella import *
 from random import randrange
 
-def cicloSnake(maze, cabeza):
+def cicloSnake(maze, cabeza):    
     tempx = maze.snakeCeldas[0][0]#maze._objetivo.x
     tempy = maze.snakeCeldas[0][1]#maze._objetivo.y
     
@@ -17,16 +17,56 @@ def cicloSnake(maze, cabeza):
         maze.respaldoObjetivo = ()
         maze.respaldoGoal = ()   
     
-    camino = aEstrella(maze, objetivo, (tempx,tempy), True)    
+    camino = aEstrella(maze, objetivo, (tempx,tempy), True)
     if camino == None:
         encerrado(maze)      
-        return 
+        return
+
+    ejecutarCaminoValido(maze, camino, (tempx,tempy))
     
-    maze.snakeSize += 1
-    maze._canvas.delete(cabeza)
-    c=agent(maze,tempx,tempy,color='red',footprints=True)
+    #maze.snakeSize += 1
+    #maze._canvas.delete(cabeza)
+    #c=agent(maze,tempx,tempy,color='red',footprints=True)
                         
-    maze.tracePath({c:camino},delay=maze.snakeDelay,kill=True)
+    #maze.tracePath({c:camino},delay=maze.snakeDelay,kill=False)
+
+def recorrerRestantes(maze, cabeza):
+    print("restantes Objetivo ", maze._goal)
+    print("restantes inicio", maze.inicioRestante)
+    print("restantes snakeCeldas ", maze.snakeCeldas) 
+
+def ejecutarCaminoValido(maze, camino, start):
+    steps = maze.steps
+    
+    print("INICIO DE STEPS")
+    print ("max_steps INTERNOS ",  steps)
+    print("CAMINO ", camino)
+    print("inicial ", start)
+
+    step = start
+    caminoRecortado = []
+
+    for x in range(steps):
+        if len(camino) == len(caminoRecortado):
+            break
+        caminoRecortado.append(step)
+        step = camino[step]
+    
+    print ("El camino recdortado es ", caminoRecortado)
+    
+    maze.stepsFaltantes = len(camino) != len(caminoRecortado)
+    
+    if maze.stepsFaltantes: 
+        print ("FALTAN STEPS POR RECORRER!")
+        maze.inicioRestante = caminoRecortado[-1]
+        print ("El inicio restante es", maze.inicioRestante)
+       
+    
+    
+    c=agent(maze,start[0],start[1],color='blue',footprints=True)
+                        
+    maze.tracePath({c:caminoRecortado},delay=maze.snakeDelay,kill=True)
+    
 
 def encerrado(maze):
     if maze.liberacion:

@@ -476,8 +476,12 @@ class maze:
             #for i in range(len(a._body)):
             #    self._canvas.delete(a._body[i])
             #TT            
-            self.snakeBody = a._body            
-            cicloSnake(self, a._head)
+            self.snakeBody = a._body
+            print ("KILL STEPS FALTANTES", self.stepsFaltantes)
+            if self.stepsFaltantes:
+                recorrerRestantes(self, a._head)
+            else:            
+                cicloSnake(self, a._head)
             #TT
         w=self._cell_width
         if((a.x,a.y) in self.markCells and showMarked):
@@ -655,10 +659,12 @@ class maze:
                 if a.goal!=(a.x,a.y) and len(p)!=0:
                     self._tracePathSingle(a,p,kill,showMarked,delay)                
     #TT
-    def configurarSnake(self):        
+    def configurarSnake(self):
+        maze.stepsFaltantes = False        
         objetivo = crearObjetivo(self)
         c=agent(self,25,25,color='red',footprints=True)
         camino = aEstrella(self, objetivo, (25,25), True)
+
         self.tracePath({c:camino},delay=self.snakeDelay,kill=True)
     #TT
     def run(self):
