@@ -1,16 +1,16 @@
 from libs.pymaze import maze
 
-m=maze()
-m.CreateMaze(loadMaze=r"D:\Dropbox\Maestria\IA\Proyecto\Codigo\Snake\mapa.csv")
+mapa=maze()
+mapa.CreateMaze(loadMaze=r"D:\Dropbox\Maestria\IA\Proyecto\Codigo\Snake\mapa.csv")
 
-MAX_STEPS = m.cols * m.rows
+MAX_STEPS = mapa.cols * mapa.rows
 
 
-m.snakeDelay = 1000
-m.caminoAleatorio = True
-m.liberacion = False
-m.steps = MAX_STEPS
+mapa.snakeDelay = 1
+mapa.caminoAleatorio = True
+mapa.liberacion = True
+mapa.steps = MAX_STEPS
 
-m.configurarSnake()
+mapa.configurarSnake()
 
-m.run()
+mapa.run()
