@@ -6,6 +6,7 @@ from random import randrange
 def cicloSnake(mapa, cabeza):
     tempx = mapa.snakeCeldas[0][0]#mapa._objetivo.x
     tempy = mapa.snakeCeldas[0][1]#mapa._objetivo.y
+    mapa._canvas.delete(cabeza)
     
     if not mapa.respaldoObjetivo:
         mapa._canvas.delete(mapa._objetivo._head)
@@ -23,7 +24,7 @@ def cicloSnake(mapa, cabeza):
         return 
     
     mapa.snakeSize += 1
-    mapa._canvas.delete(cabeza)
+    
     c=agent(mapa,tempx,tempy,color='red',footprints=True)
                         
     mapa.tracePath({c:camino},delay=mapa.snakeDelay,kill=True)

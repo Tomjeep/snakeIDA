@@ -44,32 +44,38 @@ def aEstrella(mapa,objetivo,inicio):
                     pesoF[celdaVecina] = gTemp + heuristica(celdaVecina, objetivo)
                     cola.put((pesoF[celdaVecina], heuristica(celdaVecina, objetivo), celdaVecina))
     
-    return camino
+    if objetivo in camino:
 
-    
+        caminoInvertido={}
+        celda=objetivo
+                        
+        while celda!=inicio:            
+            caminoInvertido[camino[celda]]=celda
+            celda=camino[celda]
+        
+        return caminoInvertido    
 
 def calcularCamino(mapa,objetivo,inicio, crece):
     camino = aEstrella(mapa,objetivo,inicio)
 
-    if objetivo in camino:
+    if camino is not None:
 
-        caminoInvertido={}
         snakeLargo = mapa.getSnakeSize() if crece else mapa.getSnakeSize() - 1
         if (snakeLargo == 0): 
             snakeLargo += 1
-        celda=objetivo
-        snakeCeldas = []        
+        celda=inicio
+        snakeCeldas = [celda]
                         
-        while celda!=inicio:            
-            if len(snakeCeldas) <= snakeLargo:
-                snakeCeldas.append(celda)
-            caminoInvertido[camino[celda]]=celda
+        while celda!=objetivo:            
             celda=camino[celda]
+            snakeCeldas.insert(0,celda)
+        
+        snakeCeldas = snakeCeldas[0:snakeLargo+1]
         
         while len(snakeCeldas) <= snakeLargo:
-            snakeCeldas.append(mapa.snakeCeldas.pop(0))
+            snakeCeldas.append(mapa.snakeCeldas.pop(1))
 
         mapa.snakeCeldas = snakeCeldas
-        return caminoInvertido
+        return camino
     
     print("NO HAY CAMINO")
