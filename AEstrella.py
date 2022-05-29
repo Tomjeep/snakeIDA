@@ -53,29 +53,33 @@ def aEstrella(mapa,objetivo,inicio):
             caminoInvertido[camino[celda]]=celda
             celda=camino[celda]
         
-        return caminoInvertido    
+        return caminoInvertido
+
+def calcularCeldas(mapa,objetivo,inicio, crece, camino):
+    snakeLargo = mapa.getSnakeSize() if crece else mapa.getSnakeSize() - 1
+    if (snakeLargo == 0): 
+        snakeLargo += 1
+    celda=inicio
+    snakeCeldas = [celda]
+                    
+    while celda!=objetivo:            
+        celda=camino[celda]
+        snakeCeldas.insert(0,celda)
+    
+    snakeCeldas = snakeCeldas[0:snakeLargo+1]
+    
+    while len(snakeCeldas) <= snakeLargo:
+        snakeCeldas.append(mapa.snakeCeldas.pop(1))
+
+    mapa.snakeCeldas = snakeCeldas
 
 def calcularCamino(mapa,objetivo,inicio, crece):
-    camino = aEstrella(mapa,objetivo,inicio)
+    camino = aEstrella(mapa,objetivo,inicio)    
 
     if camino is not None:
 
-        snakeLargo = mapa.getSnakeSize() if crece else mapa.getSnakeSize() - 1
-        if (snakeLargo == 0): 
-            snakeLargo += 1
-        celda=inicio
-        snakeCeldas = [celda]
-                        
-        while celda!=objetivo:            
-            celda=camino[celda]
-            snakeCeldas.insert(0,celda)
+        calcularCeldas(mapa,objetivo,inicio, crece, camino)
         
-        snakeCeldas = snakeCeldas[0:snakeLargo+1]
-        
-        while len(snakeCeldas) <= snakeLargo:
-            snakeCeldas.append(mapa.snakeCeldas.pop(1))
-
-        mapa.snakeCeldas = snakeCeldas
         return camino
     
     print("NO HAY CAMINO")
