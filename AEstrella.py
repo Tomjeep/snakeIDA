@@ -7,7 +7,7 @@ def heuristica(celdaA, celdaB):
     x2, y2 = celdaB
     return (abs(x1 - x2) + abs(y1 - y2))
 
-def aEstrella(mapa,objetivo,inicio, crece):
+def aEstrella(mapa,objetivo,inicio):
     print("objetivo", objetivo)
     print("inicio", inicio)
     cola = PriorityQueue()
@@ -43,6 +43,13 @@ def aEstrella(mapa,objetivo,inicio, crece):
                     pesoG[celdaVecina] = gTemp
                     pesoF[celdaVecina] = gTemp + heuristica(celdaVecina, objetivo)
                     cola.put((pesoF[celdaVecina], heuristica(celdaVecina, objetivo), celdaVecina))
+    
+    return camino
+
+    
+
+def calcularCamino(mapa,objetivo,inicio, crece):
+    camino = aEstrella(mapa,objetivo,inicio)
 
     if objetivo in camino:
 

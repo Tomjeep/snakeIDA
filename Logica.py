@@ -17,7 +17,7 @@ def cicloSnake(mapa, cabeza):
         mapa.respaldoObjetivo = ()
         mapa.respaldoGoal = ()   
     
-    camino = aEstrella(mapa, objetivo, (tempx,tempy), True)    
+    camino = calcularCamino(mapa, objetivo, (tempx,tempy), True)    
     if camino == None:
         encerrado(mapa)      
         return 
@@ -61,7 +61,7 @@ def algoritmoLiberacion(mapa, x, y):
     c=agent(mapa,x,y,color='red',footprints=True)
 
     print("snakeSize antes ALG", mapa.getSnakeSize())
-    camino = aEstrella(mapa, objetivo, (x,y), False)
+    camino = calcularCamino(mapa, objetivo, (x,y), False)
     print("snakeSize despues ALG", mapa.getSnakeSize())
                             
     mapa.tracePath({c:camino},delay=mapa.snakeDelay,kill=True)
