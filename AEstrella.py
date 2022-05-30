@@ -103,11 +103,11 @@ def recortarCamino(mapa, camino):
 def calcularCamino(mapa,objetivo,inicio, crece):
     camino = aEstrella(mapa,objetivo,inicio)        
 
-    if camino is not None:
-
-        calcularCeldas(mapa,objetivo,inicio, crece, camino)
+    if camino is not None:        
 
         camino = recortarCamino(mapa, camino)
+
+        calcularCeldas(mapa,objetivo,inicio, crece, camino)
         
         return convertirDiccionario(camino)
     
