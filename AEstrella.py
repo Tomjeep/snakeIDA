@@ -51,22 +51,39 @@ def aEstrella(mapa,objetivo,inicio):
                         
         while celda!=inicio:            
             caminoInvertido[camino[celda]]=celda
-            celda=camino[celda]
+            celda=camino[celda]                  
         
-        return caminoInvertido
+        return convertirLista(inicio, objetivo, caminoInvertido)
+
+def convertirLista(inicio, objetivo, camino):    
+    celda=inicio
+    celdas = [celda]
+                    
+    while celda!=objetivo:            
+        celda=camino[celda]
+        celdas.append(celda)
+
+    return celdas
+
+def convertirDiccionario(camino):
+    inicio = camino.pop(0)
+    celda = camino.pop(0)
+    diccionario = {inicio:celda}
+
+    for x in camino:
+        diccionario[celda] = x
+        celda = x
+
+    return diccionario
+
 
 def calcularCeldas(mapa,objetivo,inicio, crece, camino):
     snakeLargo = mapa.getSnakeSize() if crece else mapa.getSnakeSize() - 1
     if (snakeLargo == 0): 
         snakeLargo += 1
-    celda=inicio
-    snakeCeldas = [celda]
-                    
-    while celda!=objetivo:            
-        celda=camino[celda]
-        snakeCeldas.insert(0,celda)
     
-    snakeCeldas = snakeCeldas[0:snakeLargo+1]
+    snakeCeldas = camino[-(snakeLargo+1):]
+    snakeCeldas.reverse()
     
     while len(snakeCeldas) <= snakeLargo:
         snakeCeldas.append(mapa.snakeCeldas.pop(1))
@@ -74,12 +91,12 @@ def calcularCeldas(mapa,objetivo,inicio, crece, camino):
     mapa.snakeCeldas = snakeCeldas
 
 def calcularCamino(mapa,objetivo,inicio, crece):
-    camino = aEstrella(mapa,objetivo,inicio)    
+    camino = aEstrella(mapa,objetivo,inicio)        
 
     if camino is not None:
 
         calcularCeldas(mapa,objetivo,inicio, crece, camino)
         
-        return camino
+        return convertirDiccionario(camino)
     
     print("NO HAY CAMINO")
