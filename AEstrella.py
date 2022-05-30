@@ -90,12 +90,24 @@ def calcularCeldas(mapa,objetivo,inicio, crece, camino):
 
     mapa.snakeCeldas = snakeCeldas
 
+def recortarCamino(mapa, camino):
+    largoInicial = len(camino)
+    camino = camino[-mapa.steps:]
+    largoFinal = len(camino)
+
+    mapa.stepsFaltantes = largoInicial != largoFinal
+    print("steps faltantes= ", mapa.stepsFaltantes)
+
+    return camino
+
 def calcularCamino(mapa,objetivo,inicio, crece):
     camino = aEstrella(mapa,objetivo,inicio)        
 
     if camino is not None:
 
         calcularCeldas(mapa,objetivo,inicio, crece, camino)
+
+        camino = recortarCamino(mapa, camino)
         
         return convertirDiccionario(camino)
     
