@@ -92,7 +92,7 @@ def calcularCeldas(mapa,objetivo,inicio, crece, camino):
 
 def recortarCamino(mapa, camino):
     largoInicial = len(camino)
-    camino = camino[-mapa.steps:]
+    camino = camino[:mapa.steps]
     largoFinal = len(camino)
 
     mapa.stepsFaltantes = largoInicial != largoFinal
