@@ -476,8 +476,12 @@ class maze:
             #for i in range(len(a._body)):
             #    self._canvas.delete(a._body[i])
             #TT            
-            self.snakeBody = a._body            
-            cicloSnake(self, a._head)
+            self.snakeBody = a._body
+            print ("KILL STEPS FALTANTES", self.stepsFaltantes) 
+            if self.stepsFaltantes: 
+                recorrerRestantes(self, a._head) 
+            else:   
+                cicloSnake(self, a._head)
             #TT
         w=self._cell_width
         if((a.x,a.y) in self.markCells and showMarked):

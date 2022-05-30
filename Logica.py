@@ -30,12 +30,22 @@ def cicloSnake(mapa, cabeza):
                          
     #mapa.tracePath({c:camino},delay=mapa.snakeDelay,kill=True)
 
+def recorrerRestantes(mapa, cabeza):
+    mapa._canvas.delete(cabeza)
+    print("restantes Objetivo original", mapa.respaldoGoal) 
+    print("restantes inicio", mapa.inicioRestante) 
+    print("restantes snakeCeldas ", mapa.snakeCeldas)
+    mapa._goal = mapa.respaldoGoal
+    camino = calcularCamino(mapa, mapa.respaldoGoal, mapa.inicioRestante, False)
+
+    ejecutarCaminoValido(mapa, camino, mapa.inicioRestante)
 
 def ejecutarCaminoValido(mapa, camino, start): 
              
     if mapa.stepsFaltantes:  
-        print ("FALTAN STEPS POR RECORRER!") 
-        mapa.inicioRestante = mapa.snakeCeldas[0] 
+        print ("FALTAN STEPS POR RECORRER!")
+        mapa.respaldoGoal = mapa._goal 
+        mapa._goal = mapa.inicioRestante = mapa.snakeCeldas[0]        
         print ("El inicio restante es", mapa.inicioRestante)
      
     c=agent(mapa,start[0],start[1],color='red',footprints=True) 
