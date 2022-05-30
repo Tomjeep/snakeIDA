@@ -109,6 +109,7 @@ def calcularCamino(mapa,objetivo,inicio, crece):
 
         calcularCeldas(mapa,objetivo,inicio, crece, camino)
         
+        mapa.snakeSize += 1 if crece else 0
         return convertirDiccionario(camino)
     
     print("NO HAY CAMINO")

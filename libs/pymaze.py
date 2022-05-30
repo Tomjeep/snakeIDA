@@ -64,7 +64,7 @@ class maze:
         self._canvas=None
         self._agents=[]
         self.markCells=[]
-        self.snakeSize = 0
+        self.snakeSize = -1
         self.snakeBody = []
         self.snakeCeldas = []
         self._objetivo = []
@@ -655,7 +655,8 @@ class maze:
                 if a.goal!=(a.x,a.y) and len(p)!=0:
                     self._tracePathSingle(a,p,kill,showMarked,delay)                
     #TT
-    def configurarSnake(self):        
+    def configurarSnake(self):
+        maze.stepsFaltantes = False
         objetivo = crearObjetivo(self)
         c=agent(self,25,25,color='red',footprints=True)
         camino = calcularCamino(self, objetivo, (25,25), True)
