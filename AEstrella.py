@@ -105,7 +105,10 @@ def calcularCamino(mapa,objetivo,inicio, crece):
 
     if camino is not None:        
 
-        camino = recortarCamino(mapa, camino)
+        if mapa.ejecucionInicial:
+            mapa.ejecucionInicial=False
+        else:
+            camino = recortarCamino(mapa, camino)
 
         calcularCeldas(mapa,objetivo,inicio, crece, camino)
         

@@ -73,6 +73,7 @@ class maze:
         self.respaldoObjetivo = ()
         self.respaldoGoal = ()
         self.caminoAleatorio=True
+        self.ejecucionInicial=True
     
     def getSnakeSize(self):
         return len(self.snakeCeldas)
