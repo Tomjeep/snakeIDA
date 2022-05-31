@@ -7,6 +7,36 @@ def heuristica(celdaA, celdaB):
     x2, y2 = celdaB
     return (abs(x1 - x2) + abs(y1 - y2))
 
+def DFS(mapa,objetivo,inicio):    
+    explored=[inicio]
+    frontier=[inicio]
+    dfsPath={}
+    while len(frontier)>0:
+        currCell=frontier.pop()
+        if currCell==objetivo:
+            break
+        for d in 'ESNW':
+            if mapa.maze_map[currCell][d]==True:
+                if d=='E':
+                    childCell=(currCell[0],currCell[1]+1)
+                elif d=='W':
+                    childCell=(currCell[0],currCell[1]-1)
+                elif d=='S':
+                    childCell=(currCell[0]+1,currCell[1])
+                elif d=='N':
+                    childCell=(currCell[0]-1,currCell[1])
+                if childCell in explored:
+                    continue
+                explored.append(childCell)
+                frontier.append(childCell)
+                dfsPath[childCell]=currCell
+    fwdPath={}
+    cell=objetivo
+    while cell!=inicio:
+        fwdPath[dfsPath[cell]]=cell
+        cell=dfsPath[cell]
+    return convertirLista(inicio, objetivo, fwdPath)
+
 def aEstrella(mapa,objetivo,inicio):
     print("objetivo", objetivo)
     print("inicio", inicio)
@@ -101,8 +131,8 @@ def recortarCamino(mapa, camino):
     return camino
 
 def calcularCamino(mapa,objetivo,inicio, crece):
-    camino = aEstrella(mapa,objetivo,inicio)        
-
+    #camino = aEstrella(mapa,objetivo,inicio)
+    camino = DFS(mapa,objetivo,inicio)
     if camino is not None:        
 
         if mapa.ejecucionInicial:
