@@ -56,7 +56,7 @@ def encerrado(mapa):
     if mapa.liberacion:
         mapa.respaldoObjetivo = mapa._objetivo
         mapa.respaldoGoal = mapa._goal
-        mapa.snakeDelay = 500       
+        #mapa.snakeDelay = 500       
         algoritmoLiberacion(mapa, mapa.snakeCeldas[0][0], mapa.snakeCeldas[0][1]) 
     else: 
         textLabel(mapa,'¡AY CARAMBA! ¡NO HAY CAMINO! - FIN DEL JUEGO - PUNTAJE TOTAL', mapa.snakeSize)
