@@ -6,10 +6,12 @@ mapa.CreateMaze(loadMaze=r"D:\Dropbox\Maestria\IA\Proyecto\Codigo\Snake\mapa.csv
 MAX_STEPS = mapa.cols * mapa.rows
 
 
-mapa.snakeDelay = 1
+mapa.snakeDelay = 50
+mapa.crece = True
 mapa.caminoAleatorio = True
-mapa.liberacion = True
+mapa.liberacion = False
 mapa.steps = MAX_STEPS
+
 
 mapa.configurarSnake()
 

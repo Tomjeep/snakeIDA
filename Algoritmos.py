@@ -7,6 +7,57 @@ def heuristica(celdaA, celdaB):
     x2, y2 = celdaB
     return (abs(x1 - x2) + abs(y1 - y2))
 
+def ida_star(mapa, objetivo,inicio):
+    if objetivo == (21, 20):
+        print("llegamos")    
+    
+    bound = heuristica(inicio, objetivo)
+    path = [inicio]
+    
+    while(True):
+        t = search(mapa, objetivo, path, 0, bound)
+        
+        if t == True:
+            break
+        if t == float("inf"):
+            return
+        
+        bound = t
+    
+    path.reverse()
+    return path
+
+def search(mapa, objetivo, path, g, bound):
+    node = path[0]
+    f = g + heuristica(node, objetivo)
+    if f > bound:
+        return f
+    if node == objetivo:
+        return True
+    min = float("inf")
+
+    for d in 'ESNW':
+        if mapa.maze_map[node][d]==True:
+            if d=='E':
+                succ =(node[0],node[1]+1)
+            elif d=='W':
+                succ =(node[0],node[1]-1)
+            elif d=='S':
+                succ =(node[0]+1,node[1])
+            elif d=='N':
+                succ =(node[0]-1,node[1])
+            
+            if succ not in path and succ not in mapa.snakeCeldas:
+                path.insert(0,succ)
+                t = search(mapa, objetivo, path, g+1, bound)
+                if t == True:
+                    return True
+                if t < min:
+                    min = t
+                path.pop(0)
+    
+    return min
+
 def DFS(mapa,objetivo,inicio):    
     explored=[inicio]
     frontier=[inicio]
@@ -26,9 +77,10 @@ def DFS(mapa,objetivo,inicio):
                 elif d=='N':
                     childCell=(currCell[0]-1,currCell[1])
                 if childCell in explored:
-                    continue
+                    continue                
                 explored.append(childCell)
                 frontier.append(childCell)
+                
                 dfsPath[childCell]=currCell
     fwdPath={}
     cell=objetivo
@@ -38,8 +90,6 @@ def DFS(mapa,objetivo,inicio):
     return convertirLista(inicio, objetivo, fwdPath)
 
 def aEstrella(mapa,objetivo,inicio):
-    print("objetivo", objetivo)
-    print("inicio", inicio)
     cola = PriorityQueue()
     cola.put((heuristica(inicio, objetivo), heuristica(inicio, objetivo), inicio))
     camino = {}
@@ -131,8 +181,14 @@ def recortarCamino(mapa, camino):
     return camino
 
 def calcularCamino(mapa,objetivo,inicio, crece):
+    print("inicio", inicio, "objetivo", objetivo)    
     #camino = aEstrella(mapa,objetivo,inicio)
-    camino = DFS(mapa,objetivo,inicio)
+    #camino = DFS(mapa,objetivo,inicio)    
+    camino = ida_star(mapa, objetivo, inicio)
+
+    if not mapa.crece:
+        crece = False
+    
     if camino is not None:        
 
         if mapa.ejecucionInicial:

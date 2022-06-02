@@ -1,11 +1,11 @@
 from libs.agent import agent,textLabel
 from libs.color import COLOR
-from AEstrella import *
+from Algoritmos import *
 from random import randrange
 
 def cicloSnake(mapa, cabeza):
-    tempx = mapa.snakeCeldas[0][0]#mapa._objetivo.x
-    tempy = mapa.snakeCeldas[0][1]#mapa._objetivo.y
+    tempx = mapa.snakeCeldas[0][0]
+    tempy = mapa.snakeCeldas[0][1]
     mapa._canvas.delete(cabeza)
         
     if not mapa.respaldoObjetivo:
@@ -69,11 +69,13 @@ def crearObjetivo(mapa):
             x = randrange(1,25,1)
             y = randrange(1,25,1)
             notValid = (x,y) in mapa.snakeCeldas
+        mapa.pathTotal.append((x,y))
+        print ("path total ", mapa.pathTotal)
     else :
         x = defaultPath[mapa.getSnakeSize()][0]
         y = defaultPath[mapa.getSnakeSize()][1]
     
-    mapa._objetivo= agent(mapa,x,y,color=COLOR.green)    
+    mapa._objetivo= agent(mapa,x,y,color=COLOR.green)
     mapa._goal = (x,y)    
     return (x, y)
 
